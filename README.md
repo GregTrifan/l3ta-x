@@ -1,6 +1,13 @@
-# Turborepo starter
+# l3ta-x
 
-This is an official Yarn v1 starter turborepo.
+Based on the Turborepo starter template
+
+## TODO
+
+- Implement contract deployment package (under `apps/`)
+- Update Next.js to use the features avalaible on the contract
+- Document what you've built
+- Upload a YT Video
 
 ## What's inside?
 
@@ -64,14 +71,3 @@ Next, you can link your Turborepo to your Remote Cache by running the following 
 ```
 npx turbo link
 ```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Pipelines](https://turborepo.org/docs/features/pipelines)
-- [Caching](https://turborepo.org/docs/features/caching)
-- [Remote Caching (Beta)](https://turborepo.org/docs/features/remote-caching)
-- [Scoped Tasks](https://turborepo.org/docs/features/scopes)
-- [Configuration Options](https://turborepo.org/docs/reference/configuration)
-- [CLI Usage](https://turborepo.org/docs/reference/command-line-reference)
