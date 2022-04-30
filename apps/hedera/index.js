@@ -3,18 +3,20 @@ const {
   PrivateKey,
   ContractCreateTransaction,
   FileCreateTransaction,
+  ContractFunctionParameters,
   ContractDeleteTransaction,
   ContractCallQuery,
   Hbar,
+  ContractExecuteTransaction,
   AccountId,
 } = require("@hashgraph/sdk");
-
+const fs = require("fs");
 const dotenv = require("dotenv");
 
 dotenv.config();
 
 // Import the compiled contract
-const letaX = require("../../packages/contracts/LetaX.json");
+const letaX = fs.readFileSync("dist/contracts_LetaX_sol_LetaX.bin");
 
 async function main() {
   let client;
@@ -30,7 +32,7 @@ async function main() {
     );
   }
 
-  const contractByteCode = letaX.deployedBytecode;
+  const contractByteCode = letaX;
 
   // Create a file on Hedera which contains the contact bytecode.
   // Note: The contract bytecode **must** be hex encoded, it should not
@@ -51,12 +53,16 @@ async function main() {
   // Create the contract
   const contractTransactionResponse = await new ContractCreateTransaction()
     // Set gas to create the contract
-    .setGas(75000)
+    .setGas(100000)
     // The contract bytecode must be set to the file ID containing the contract bytecode
     .setBytecodeFileId(fileId)
+    .setConstructorParameters(
+      new ContractFunctionParameters().addString("L3taX")
+    )
     // Set the admin key on the contract in case the contract should be deleted or
     // updated in the future
     .setAdminKey(client.operatorPublicKey)
+
     .execute(client);
 
   // Fetch the receipt for the transaction that created the contract
@@ -67,16 +73,13 @@ async function main() {
 
   console.log(`new contract ID: ${contractId.toString()}`);
 
-  // Call a method on a contract that exists on Hedera
+  // Call a method on a contract
   // Note: `ContractCallQuery` cannot mutate a contract, it will only return the last state
   // of the contract
   const contractCallResult = await new ContractCallQuery()
-    // Set the gas to execute a contract call
-    .setGas(75000)
-    // Set which contract
     .setContractId(contractId)
-    // Set the function to call on the contract
-    .setFunction("greet")
+    .setGas(75000)
+    .setFunction("getMessage")
     .setQueryPayment(new Hbar(1))
     .execute(client);
 
@@ -98,18 +101,6 @@ async function main() {
   //      const string = contractCallResult.getString(2);
   const message = contractCallResult.getString(0);
   console.log(`contract message: ${message}`);
-
-  const contractDeleteResult = await new ContractDeleteTransaction()
-    .setContractId(contractId)
-    .execute(client);
-
-  // Delete the contract
-  // Note: The admin key of the contract needs to sign the transaction
-  // In this case the client operator is the same as the admin key so the
-  // automatic signing takes care of this for you
-  await contractDeleteResult.getReceipt(client);
-
-  console.log("contract successfully deleted");
 }
 
 void main();

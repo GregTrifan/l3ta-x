@@ -18,4 +18,8 @@ contract LetaX {
     function setMessage(string memory _message) external {
         message = _message;
     }
+
+    function getMessage() public view returns (string memory) {
+        return message;
+    }
 }

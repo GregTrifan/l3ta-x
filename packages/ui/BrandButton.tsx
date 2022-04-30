@@ -1,6 +1,8 @@
 import { Button, SharedButtonProps } from "@mantine/core";
+import { MouseEventHandler } from "react";
 type PropTypes = SharedButtonProps & {
   children: React.ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 const BrandButton = (props: PropTypes) => {
   return (
