@@ -101,6 +101,12 @@ async function main() {
   //      const string = contractCallResult.getString(2);
   const message = contractCallResult.getString(0);
   console.log(`contract message: ${message}`);
+  fs.writeFileSync(
+    "../../packages/contracts/LetaX.json",
+    JSON.stringify({
+      contractId: contractId.toString(),
+    })
+  );
 }
 
 void main();

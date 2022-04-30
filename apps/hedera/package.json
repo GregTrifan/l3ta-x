@@ -4,14 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "compile": "npx truffle compile && npx solc -o dist/ --bin contracts/LetaX.sol ",
+    "compile": "npx solc -o dist/ --bin contracts/LetaX.sol ",
     "build": "$npm_execpath run compile && node index.js"
   },
   "dependencies": {
     "@hashgraph/sdk": "^2.13.1",
     "contracts": "*",
     "dotenv": "^16.0.0",
-    "solc": "^0.8.13",
-    "truffle": "^5.5.11"
+    "solc": "^0.8.13"
   }
 }
