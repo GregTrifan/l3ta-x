@@ -4,6 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "files": [
-    "LetaX.json"
+    "hardhat_contracts.json"
   ]
 }

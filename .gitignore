@@ -31,3 +31,8 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+apps/hardhat/artifacts*
+apps/hardhat/deployments
+apps/hardhat/cache*
+apps/hardhat/*.txt
